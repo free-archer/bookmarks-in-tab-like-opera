@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "Bookmaks",
+  "description": "Bookmaks",
+  "version": "1.01",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+
+  "background": {
+    "scripts": [
+      "popup.js"
+    ],
+    "persistent": false
+  },
+
+  "browser_action": {
+    "default_icon": "icons.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "browsingData"
+  ]
+}
