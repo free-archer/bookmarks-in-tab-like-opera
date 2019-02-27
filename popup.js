@@ -1,5 +1,8 @@
+'use strict'
+
 const btn = document.getElementById("btn");
-btn.addEventListener("click", function() {
+
+btn.addEventListener("click", () => {
     chrome.tabs.create({
     url: `chrome-extension://${chrome.runtime.id}/index.html`
   });
