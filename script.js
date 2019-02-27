@@ -1,5 +1,5 @@
 const getBookmarks = () => {
-    const bookmarkTreeNodes = chrome.bookmarks.getTree( (bookmarkTreeNodes) => {
+    const bookmarkTreeNodes = chrome.bookmarks.getSubTree('1938', (bookmarkTreeNodes) => {
       console.log(bookmarkTreeNodes);
           //$('#bookmarks').append(dumpTreeNodes(bookmarkTreeNodes, query));
       })
@@ -7,4 +7,8 @@ const getBookmarks = () => {
   
   document.addEventListener('DOMContentLoaded', () => {
     getBookmarks();
+
+    chrome.bookmarks.search('ПЛИТКИ', (bookmarkTreeNodes) => {
+        console.log(bookmarkTreeNodes);
+    })
   });
