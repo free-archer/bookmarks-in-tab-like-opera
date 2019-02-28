@@ -1,3 +1,7 @@
+:root {
+    margin: 0;
+    padding: 0;
+}
 .flex-contener {
     display: flex;
     justify-content: center;
@@ -25,6 +29,7 @@
     font-size: 12px;
     width: 200px;
     min-height: 170px;
+    margin: 5px;
 }
 .bk-contener {
     display: flex;
@@ -41,7 +46,7 @@
     overflow: hidden;
 }
 .bk {
-    width: 85px;
+    width: 90px;
     height: 60px; 
     border: 1px solid #666;
     margin: 2px;

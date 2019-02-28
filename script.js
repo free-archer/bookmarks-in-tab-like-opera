@@ -10,34 +10,37 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
             contenerBkContener.appendChild(divBKContener)
 
             const span = document.createElement('span')
+            span.classList.add('title')
             span.textContent= bkTreeNodesChild.title
             contenerBkContener.appendChild(span)
 
             createDivBkContener(bkTreeNodesChild, divBKContener)
         } else {
-
             if (divContener.classList[0] == 'contener') {
+                const contenerBkContener = document.createElement('div')
+                contenerBkContener.classList.add('contener-bk-contener')
+                divContener.appendChild(contenerBkContener)
+    
                 const divBKContener = document.createElement('div')
                 divBKContener.classList.add('bk-contener')
-                divContener.appendChild(divBKContener)
-                
+                contenerBkContener.appendChild(divBKContener)
+    
                 const divBK = document.createElement('div')
                 divBK.classList.add('bk')
-                divBK.textContent = bkTreeNodesChild.title
-
+                divBK.textContent = bkTreeNodesChild.title.substring(0, 10)
                 divBKContener.appendChild(divBK)
+    
+                const span = document.createElement('span')
+                span.classList.add('title')
+                span.textContent= bkTreeNodesChild.title.substring(0, 10)
+                contenerBkContener.appendChild(span)
             } else {
                 const divBK = document.createElement('div')
                 divBK.classList.add('bk')
-                divBK.textContent = bkTreeNodesChild.title
+                divBK.textContent = bkTreeNodesChild.title.substring(0, 10)
 
                 divContener.appendChild(divBK)
             }
-
-            // const aLink = document.createElement('a')
-            // aLink.setAttribute('href', bkTreeNodesChild.url)
-            // aLink.textContent= bkTreeNodesChild.title
-            // contenerBkContener.appendChild(aLink)
         }
     }
 
@@ -45,21 +48,10 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
 
 const getBookmarks = () => {
     chrome.bookmarks.getSubTree('1938', (startTreeNodes) => {
+      const bkContener = document.getElementById('bookmarks')
 
-      const bkContener = document.getElementById('bookmarks');
+            createDivBkContener(startTreeNodes[0], bkContener)
 
-      //for (const bkTreeNodes of arBookmarkTreeNodes) {
-          //for (const childbkTreeNodes of startTreeNodes[0].children) {
-            // bkContener.classList.add('bk-contener')
-            // bkContener.textContent = childbkTreeNodes.title
-
-            createDivBkContener(startTreeNodes[0], bkContener);
-
-              //bkContener.appendChild(divBKContener);
-          //}
-      //}
-
-          //$('#bookmarks').append(dumpTreeNodes(bookmarkTreeNodes, query));
       })
     }
 
@@ -67,7 +59,7 @@ const getBookmarks = () => {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    getBookmarks();
+    getBookmarks()
 
     // chrome.bookmarks.search('ПЛИТКИ', (bookmarkTreeNodes) => {
     //     console.log(bookmarkTreeNodes);
