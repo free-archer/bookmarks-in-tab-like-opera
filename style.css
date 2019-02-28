@@ -1,7 +1,18 @@
 :root {
     margin: 0;
     padding: 0;
+    --bg-color0: #55931F;
+    --bg-color1: #3A6FB4;
+    --bg-color2: #863AB4;
+    --bg-color3: #F50067;
+    --bg-color4: #215182;
+    --bg-color5: #3A4AB4;
+    --bg-color6: #FFFFFF;
+    --bg-color7: #3AB0B4;
+    --bg-color8: #E89A00;
+    --bg-color9: #55338E;
 }
+
 .flex-contener {
     display: flex;
     justify-content: center;
@@ -30,12 +41,16 @@
     width: 200px;
     min-height: 170px;
     margin: 5px;
+    background: #EEEDFA;
+    border-radius: 5px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
 }
 .bk-contener {
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
-    border: 1px solid #333;
+    /* border: 1px solid #333; */
     margin-bottom: 10px;
     margin-left: 5px;
     margin-right: 5px;
@@ -48,9 +63,11 @@
 .bk {
     width: 90px;
     height: 60px; 
-    border: 1px solid #666;
+    border: 1px solid #216BA3;
+    border-radius: 5px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);    
     margin: 2px;
-    background: #888;
+    background: #216BA3;
     text-align: center;
     font-size: 10px;
     overflow: hidden;
