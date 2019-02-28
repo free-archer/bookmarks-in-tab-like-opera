@@ -2,42 +2,52 @@
     display: flex;
     justify-content: center;
     justify-items: center;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 .contener {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: start;
     flex-wrap: wrap;
-    width: 500px;
-    min-height: 500px;
-    border: 1px solid blue;
+    width: 1400px;
+    min-height: 800px;
+    /* border: 1px solid blue; */
 
 
+}
+.contener-bk-contener {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    /* border: 1px solid brown; */
+    text-align: center;
+    font-size: 12px;
+    width: 200px;
+    min-height: 170px;
 }
 .bk-contener {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    border: 1px solid green;
+    justify-content: start;
+    border: 1px solid #333;
     margin-bottom: 10px;
     margin-left: 5px;
     margin-right: 5px;
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 170px;
     text-align: center;
     font-size: 12px;
-}
-.bk-contener-cild {
-    width: 90px;
-    height: 90px;
+    overflow: hidden;
 }
 .bk {
-    width: 40px;
-    height: 40px;
+    width: 85px;
+    height: 60px; 
     border: 1px solid #666;
+    margin: 2px;
     background: #888;
     text-align: center;
     font-size: 10px;
+    overflow: hidden;
 }
 
