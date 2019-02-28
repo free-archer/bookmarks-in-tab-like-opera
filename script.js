@@ -4,6 +4,8 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
             const divBKContener = document.createElement('div')
             divBKContener.classList.add('bk-contener')
             divBKContener.textContent = bkTreeNodesChild.title
+            divContener.appendChild(divBKContener)
+
             createDivBkContener(bkTreeNodesChild, divBKContener)
         } else {
             const divBK = document.createElement('div')
@@ -11,7 +13,6 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
             divBK.textContent = bkTreeNodesChild.title
 
             divContener.appendChild(divBK)
-            return divContener
         }
     }
 
@@ -24,7 +25,10 @@ const getBookmarks = () => {
 
       //for (const bkTreeNodes of arBookmarkTreeNodes) {
           //for (const childbkTreeNodes of startTreeNodes[0].children) {
-              divBKContener = createDivBkContener(startTreeNodes[0], bkContener);
+            // bkContener.classList.add('bk-contener')
+            // bkContener.textContent = childbkTreeNodes.title
+
+            createDivBkContener(startTreeNodes[0], bkContener);
 
               //bkContener.appendChild(divBKContener);
           //}
