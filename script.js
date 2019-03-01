@@ -28,50 +28,17 @@
 
  document.addEventListener('click', (evt) => {
     removeDialogBk() 
- }, true)
- const actionClickContener = (evt) => {
-    //removeDialogBk()
-
-    // const bkContener = document.getElementById('bookmarks')
-
-    // const divBKContener = document.createElement('div')
-    // divBKContener.classList.add('bk-dialog')
-    // divBKContener.style.left = evt.clientX+'px'
-    // divBKContener.style.top = evt.clientY+'px'
-    // console.log(evt.clientX)
-    // console.log(evt.clientY)
-    // //bkContener.appendChild(divBKContener)    
-    // document.body.appendChild(divBKContener)
-
-    // const bk = evt.target.children
-    // for(elem of bk) {
-    //     console.log(elem)
-    //     const url = elem.getAttribute('url')
-    //     const title = elem.textContent
-
-    //     const divBK = document.createElement('div')
-    //     divBK.setAttribute('url', url)
-    //     divBK.classList.add('bk')
-    //     divBK.style.backgroundColor = `var(--bg-color1)`
-    //     divBK.textContent = title
-
-    //     divBK.addEventListener('click', (evt) => actionClickBk(evt))
-
-    //     divBKContener.appendChild(divBK)
-
-    // }
-}
-
+    }, 
+    true)
+ 
 const actionClickSpan = (evt) => {
-    //removeDialogBk()
-
     const divBKContener = document.createElement('div')
     divBKContener.classList.add('bk-dialog')
     divBKContener.style.left = evt.clientX+'px'
     divBKContener.style.top = evt.clientY+'px'
     console.log(evt.clientX)
     console.log(evt.clientY)
-    //bkContener.appendChild(divBKContener)    
+
     document.body.appendChild(divBKContener)
 
     const bk = evt.target.parentElement.children[0].children
@@ -89,7 +56,6 @@ const actionClickSpan = (evt) => {
         divBK.addEventListener('click', (evt) => actionClickBk(evt))
 
         divBKContener.appendChild(divBK)
-
     }
 }
 
@@ -148,21 +114,17 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
                 contenerBkContener.appendChild(span)
             } else { 
                 //тут вывод самих конечных закладок
+                const divBK = document.createElement('div')
+                divBK.setAttribute('url', bkTreeNodesChild.url)
+                divBK.classList.add('bk')
+                divBK.style.backgroundColor = `var(--bg-color${colorInd})`
+                divBK.textContent = getTitleShort(bkTreeNodesChild.url)
 
-                    const divBK = document.createElement('div')
-                    divBK.setAttribute('url', bkTreeNodesChild.url)
-                    divBK.classList.add('bk')
-                    divBK.style.backgroundColor = `var(--bg-color${colorInd})`
-                    divBK.textContent = getTitleShort(bkTreeNodesChild.url)
+                if (index > 3 ) divBK.style.display='none'
 
-                    if (index > 3 ) divBK.style.display='none'
+                divBK.addEventListener('click', (evt) => actionClickBk(evt))
 
-                    divBK.addEventListener('click', (evt) => actionClickBk(evt))
-
-                    divContener.appendChild(divBK)
-
-                    divContener.addEventListener('click', (evt) => actionClickContener(evt))
-
+                divContener.appendChild(divBK)
             }
         }
     }
@@ -172,18 +134,15 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
 const getBookmarks = () => {
     //1938
     chrome.bookmarks.search('PLIT', (bookmarkTreeNodes) => {
-        console.log(bookmarkTreeNodes);
-    
+        // console.log(bookmarkTreeNodes);
         const startNode = bookmarkTreeNodes[0].id
 
-    chrome.bookmarks.getSubTree(startNode, (startTreeNodes) => {
-      const bkContener = document.getElementById('bookmarks')
-
+        chrome.bookmarks.getSubTree(startNode, (startTreeNodes) => {
+            const bkContener = document.getElementById('bookmarks')
             createDivBkContener(startTreeNodes[0], bkContener)
-
       })
     })
-    }
+}
 
     // chrome.bookmarks.getTree((startTreeNodes) => {
     //     const bkContener = document.getElementById('bookmarks')
@@ -193,9 +152,6 @@ const getBookmarks = () => {
     //     })
     //   }
   
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     getBookmarks()
   })
