@@ -1,8 +1,9 @@
- const getTitle = (url, title) => {
+ const getTitle = (url) => {
     //const text = url.match(/:\/\/.*\.\w{1,3}\//)[0].slice(3,-1)
     const start = url.search(/:\/\//)+3
     const temp = url.substring(start)
-    const end = temp.search(/\//)
+    //const end = temp.search(/\//)
+    const end = temp.search(/\./)
     //const end = url.search(/\.\w{1,3}\//)+4
 
     return temp.substring(0, end)
@@ -53,7 +54,7 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
                 divBK.setAttribute('url', bkTreeNodesChild.url)
                 divBK.classList.add('bk')
                 divBK.style.backgroundColor = `var(--bg-color${colorInd})`
-                divBK.textContent = getTitle(bkTreeNodesChild.url, bkTreeNodesChild.title)
+                divBK.textContent = getTitle(bkTreeNodesChild.url)
                 divBKContener.appendChild(divBK)
 
                 divBK.addEventListener('click', (evt) => actionClickBk(evt))
@@ -69,7 +70,12 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
                     divBK.setAttribute('url', bkTreeNodesChild.url)
                     divBK.classList.add('bk')
                     divBK.style.backgroundColor = `var(--bg-color${colorInd})`
-                    divBK.textContent = getTitle(bkTreeNodesChild.url, bkTreeNodesChild.title)
+                    divBK.textContent = getTitle(bkTreeNodesChild.url)
+
+                    const smallSpan = document.createElement('p')
+                    smallSpan.classList.add('smallSpan')
+                    smallSpan.textContent= bkTreeNodesChild.url
+                    divBK.appendChild(smallSpan)
 
                     divBK.addEventListener('click', (evt) => actionClickBk(evt))
 

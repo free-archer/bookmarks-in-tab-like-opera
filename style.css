@@ -71,6 +71,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 90px;
     height: 60px; 
     /* border: 1px solid #216BA3; */
@@ -81,6 +82,10 @@ body {
     overflow: hidden;
     cursor: pointer;
     color: white;
+    font-size: 16px;
     /* vertical-align: middle; */
 }
-
+.smallSpan {
+    font-size: 8px;
+    font-weight: 100;
+}
