@@ -16,14 +16,54 @@
 
  const actionClickBk = (evt) => {
     evt.preventDefault();
+    removeDialogBk()
     const url = evt.target.getAttribute('url')
     window.open(url).focus();
  }
 
- const actionClickContener = (evt) => {
-    console.log(evt.target.children)
+ const removeDialogBk = () => {
+     const bkDialog = document.querySelector('.bk-dialog')
+     if (bkDialog) bkDialog.remove()
+ } 
 
-    const bkContener = document.getElementById('bookmarks')
+ document.addEventListener('click', (evt) => {
+    removeDialogBk() 
+ }, true)
+ const actionClickContener = (evt) => {
+    //removeDialogBk()
+
+    // const bkContener = document.getElementById('bookmarks')
+
+    // const divBKContener = document.createElement('div')
+    // divBKContener.classList.add('bk-dialog')
+    // divBKContener.style.left = evt.clientX+'px'
+    // divBKContener.style.top = evt.clientY+'px'
+    // console.log(evt.clientX)
+    // console.log(evt.clientY)
+    // //bkContener.appendChild(divBKContener)    
+    // document.body.appendChild(divBKContener)
+
+    // const bk = evt.target.children
+    // for(elem of bk) {
+    //     console.log(elem)
+    //     const url = elem.getAttribute('url')
+    //     const title = elem.textContent
+
+    //     const divBK = document.createElement('div')
+    //     divBK.setAttribute('url', url)
+    //     divBK.classList.add('bk')
+    //     divBK.style.backgroundColor = `var(--bg-color1)`
+    //     divBK.textContent = title
+
+    //     divBK.addEventListener('click', (evt) => actionClickBk(evt))
+
+    //     divBKContener.appendChild(divBK)
+
+    // }
+}
+
+const actionClickSpan = (evt) => {
+    //removeDialogBk()
 
     const divBKContener = document.createElement('div')
     divBKContener.classList.add('bk-dialog')
@@ -34,7 +74,7 @@
     //bkContener.appendChild(divBKContener)    
     document.body.appendChild(divBKContener)
 
-    const bk = evt.target.children
+    const bk = evt.target.parentElement.children[0].children
     for(elem of bk) {
         console.log(elem)
         const url = elem.getAttribute('url')
@@ -51,7 +91,7 @@
         divBKContener.appendChild(divBK)
 
     }
- }
+}
 
 const createDivBkContener = (bkTreeNodes, divContener) => {
     for (bkTreeNodesChild of bkTreeNodes.children) {
@@ -69,11 +109,14 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
             divBKContener.classList.add('bk-contener')
             contenerBkContener.appendChild(divBKContener)
 
-            const span = document.createElement('span')
+            const span = document.createElement('div')
             span.classList.add('title')
             span.textContent= bkTreeNodesChild.title.substring(0, 20)
-            contenerBkContener.appendChild(span)
 
+            span.addEventListener('click', (evt) => actionClickSpan(evt))
+
+            contenerBkContener.appendChild(span)
+            
             createDivBkContener(bkTreeNodesChild, divBKContener)
         } else {
             if (divContener.classList[0] == 'contener') {
@@ -96,25 +139,30 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
 
                 divBK.addEventListener('click', (evt) => actionClickBk(evt))
     
-                const span = document.createElement('span')
+                const span = document.createElement('div')
                 span.classList.add('title')
                 span.textContent= bkTreeNodesChild.title.substring(0, 20)
+
+                span.addEventListener('click', (evt) => actionClickSpan(evt))
+
                 contenerBkContener.appendChild(span)
             } else { 
                 //тут вывод самих конечных закладок
-                if (index < 4 ) {
+
                     const divBK = document.createElement('div')
                     divBK.setAttribute('url', bkTreeNodesChild.url)
                     divBK.classList.add('bk')
                     divBK.style.backgroundColor = `var(--bg-color${colorInd})`
                     divBK.textContent = getTitleShort(bkTreeNodesChild.url)
 
+                    if (index > 3 ) divBK.style.display='none'
+
                     divBK.addEventListener('click', (evt) => actionClickBk(evt))
 
                     divContener.appendChild(divBK)
 
                     divContener.addEventListener('click', (evt) => actionClickContener(evt))
-                }
+
             }
         }
     }
