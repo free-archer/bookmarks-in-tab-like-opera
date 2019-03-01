@@ -19,6 +19,40 @@
     const url = evt.target.getAttribute('url')
     window.open(url).focus();
  }
+
+ const actionClickContener = (evt) => {
+    console.log(evt.target.children)
+
+    const bkContener = document.getElementById('bookmarks')
+
+    const divBKContener = document.createElement('div')
+    divBKContener.classList.add('bk-dialog')
+    divBKContener.style.left = evt.clientX+'px'
+    divBKContener.style.top = evt.clientY+'px'
+    console.log(evt.clientX)
+    console.log(evt.clientY)
+    //bkContener.appendChild(divBKContener)    
+    document.body.appendChild(divBKContener)
+
+    const bk = evt.target.children
+    for(elem of bk) {
+        console.log(elem)
+        const url = elem.getAttribute('url')
+        const title = elem.textContent
+
+        const divBK = document.createElement('div')
+        divBK.setAttribute('url', url)
+        divBK.classList.add('bk')
+        divBK.style.backgroundColor = `var(--bg-color1)`
+        divBK.textContent = title
+
+        divBK.addEventListener('click', (evt) => actionClickBk(evt))
+
+        divBKContener.appendChild(divBK)
+
+    }
+ }
+
 const createDivBkContener = (bkTreeNodes, divContener) => {
     for (bkTreeNodesChild of bkTreeNodes.children) {
         const index = bkTreeNodesChild.index
@@ -42,15 +76,13 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
 
             createDivBkContener(bkTreeNodesChild, divBKContener)
         } else {
-            //if (index > 4 ) break
-
             if (divContener.classList[0] == 'contener') {
                 //тут мы создаем контейнер если у нас закладка без папки
                 const contenerBkContener = document.createElement('div')
                 contenerBkContener.classList.add('contener-bk-contener')
                 contenerBkContener.classList.add('tile')
                 divContener.appendChild(contenerBkContener)
-    
+
                 const divBKContener = document.createElement('div')
                 divBKContener.classList.add('bk-contener')
                 contenerBkContener.appendChild(divBKContener)
@@ -80,6 +112,8 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
                     divBK.addEventListener('click', (evt) => actionClickBk(evt))
 
                     divContener.appendChild(divBK)
+
+                    divContener.addEventListener('click', (evt) => actionClickContener(evt))
                 }
             }
         }
@@ -88,21 +122,32 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
 }
 
 const getBookmarks = () => {
-    chrome.bookmarks.getSubTree('1938', (startTreeNodes) => {
+    //1938
+    chrome.bookmarks.search('PLIT', (bookmarkTreeNodes) => {
+        console.log(bookmarkTreeNodes);
+    
+        const startNode = bookmarkTreeNodes[0].id
+
+    chrome.bookmarks.getSubTree(startNode, (startTreeNodes) => {
       const bkContener = document.getElementById('bookmarks')
 
             createDivBkContener(startTreeNodes[0], bkContener)
 
       })
+    })
     }
 
+    // chrome.bookmarks.getTree((startTreeNodes) => {
+    //     const bkContener = document.getElementById('bookmarks')
+  
+    //           createDivBkContener(startTreeNodes[0], bkContener)
+  
+    //     })
+    //   }
+  
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
     getBookmarks()
-
-    // chrome.bookmarks.search('ПЛИТКИ', (bookmarkTreeNodes) => {
-    //     console.log(bookmarkTreeNodes);
-    // })
   })
