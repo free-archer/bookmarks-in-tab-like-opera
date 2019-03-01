@@ -1,15 +1,26 @@
-function rand(){
-    var c=parseInt(Math.random()*255).toString(16);
-    return (""+c).length==1?'0'+c:c;
-}    
-const randomColor = () => {
-        var c='#'+rand()+rand()+rand();
-        alert(c);
+ const getTitle = (url, title) => {
+    //const text = url.match(/:\/\/.*\.\w{1,3}\//)[0].slice(3,-1)
+    const start = url.search(/:\/\//)+3
+    const temp = url.substring(start)
+    const end = temp.search(/\//)
+    //const end = url.search(/\.\w{1,3}\//)+4
+
+    return temp.substring(0, end)
  }
 
+ const actionClickBk = (evt) => {
+    evt.preventDefault();
+    const url = evt.target.getAttribute('url')
+    window.open(url).focus();
+ }
 const createDivBkContener = (bkTreeNodes, divContener) => {
     for (bkTreeNodesChild of bkTreeNodes.children) {
+        const index = bkTreeNodesChild.index
+        const delitel = index.toString.length*10
+        const colorInd= index < 10 ? index : index/delitel
+
         if (bkTreeNodesChild.children) {
+            //здесь рекурсивно создаются блоки куда уже будут вложены закладки
             const contenerBkContener = document.createElement('div')
             contenerBkContener.classList.add('contener-bk-contener')
             divContener.appendChild(contenerBkContener)
@@ -25,7 +36,10 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
 
             createDivBkContener(bkTreeNodesChild, divBKContener)
         } else {
+            //if (index > 4 ) break
+
             if (divContener.classList[0] == 'contener') {
+                //тут мы создаем контейнер если у нас закладка без папки
                 const contenerBkContener = document.createElement('div')
                 contenerBkContener.classList.add('contener-bk-contener')
                 contenerBkContener.classList.add('tile')
@@ -36,21 +50,31 @@ const createDivBkContener = (bkTreeNodes, divContener) => {
                 contenerBkContener.appendChild(divBKContener)
     
                 const divBK = document.createElement('div')
+                divBK.setAttribute('url', bkTreeNodesChild.url)
                 divBK.classList.add('bk')
-                divBK.style.backgroundColor='var(--bg-color3)'
-                divBK.textContent = bkTreeNodesChild.title
+                divBK.style.backgroundColor = `var(--bg-color${colorInd})`
+                divBK.textContent = getTitle(bkTreeNodesChild.url, bkTreeNodesChild.title)
                 divBKContener.appendChild(divBK)
+
+                divBK.addEventListener('click', (evt) => actionClickBk(evt))
     
                 const span = document.createElement('span')
                 span.classList.add('title')
                 span.textContent= bkTreeNodesChild.title.substring(0, 20)
                 contenerBkContener.appendChild(span)
-            } else {
-                const divBK = document.createElement('div')
-                divBK.classList.add('bk')
-                divBK.textContent = bkTreeNodesChild.title
+            } else { 
+                //тут вывод самих конечных закладок
+                if (index < 4 ) {
+                    const divBK = document.createElement('div')
+                    divBK.setAttribute('url', bkTreeNodesChild.url)
+                    divBK.classList.add('bk')
+                    divBK.style.backgroundColor = `var(--bg-color${colorInd})`
+                    divBK.textContent = getTitle(bkTreeNodesChild.url, bkTreeNodesChild.title)
 
-                divContener.appendChild(divBK)
+                    divBK.addEventListener('click', (evt) => actionClickBk(evt))
+
+                    divContener.appendChild(divBK)
+                }
             }
         }
     }
