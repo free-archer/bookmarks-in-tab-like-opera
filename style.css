@@ -18,6 +18,7 @@ body {
     font-weight: 400px;
     font-size: 14px;
     font-family: sans-serif, Arial;
+    background: cornflowerblue;
 }
 
 .flex-contener {
@@ -91,12 +92,12 @@ body {
     position: fixed;
     display: flex;
     flex-wrap: wrap;
-    width: 600px;
-    height: var(--heght-bk);
+    width: 400px;
+    /* height: var(--heght-bk); */
     flex-direction: row;
     flex-wrap: nowrap;
     /* border: 1px solid brown; */
-    background: #EEEDFA;
+    /* background: #EEEDFA; */
     border-radius: 5px;
     z-index: 100;
 }
