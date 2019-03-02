@@ -124,24 +124,27 @@ const readNodeRecurcive= (bkTreeNodes, divContener) => {
 
 const getBookmarks = () => {
     //1938
-    chrome.bookmarks.search('PLIT', (bookmarkTreeNodes) => {
+    chrome.bookmarks.search('#PLIT#', (bookmarkTreeNodes) => {
         // console.log(bookmarkTreeNodes);
         const startNode = bookmarkTreeNodes[0].id
 
-        chrome.bookmarks.getSubTree(startNode, (startTreeNodes) => {
-            const bkContener = document.getElementById('bookmarks')
-            readNodeRecurcive(startTreeNodes[0], bkContener)
-      })
+        if (startNode && false) {
+            chrome.bookmarks.getSubTree(startNode, (startTreeNodes) => {
+                const bkContener = document.getElementById('bookmarks')
+                readNodeRecurcive(startTreeNodes[0], bkContener)
+            })
+        } 
+        else {
+            chrome.bookmarks.getTree((startTreeNodes) => {
+                const bkContener = document.getElementById('bookmarks')
+                readNodeRecurcive(startTreeNodes[0], bkContener)
+            })
+        }
+      
     })
 }
 
-    // chrome.bookmarks.getTree((startTreeNodes) => {
-    //     const bkContener = document.getElementById('bookmarks')
-  
-    //           readNodeRecurcive(startTreeNodes[0], bkContener)
-  
-    //     })
-    //   }
+
   
 document.addEventListener('DOMContentLoaded', () => {
     getBookmarks()
