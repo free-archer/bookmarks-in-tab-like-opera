@@ -4,7 +4,7 @@
   "description": "Bookmaks",
   "version": "0.1",
   "chrome_url_overrides": {
-    "newtab": "popup.html"
+    "newtab": "index.html"
   },
   "background": {
     "scripts": [
@@ -15,7 +15,7 @@
   "browser_action": {
     "default_title": "BookBookmaks on panelmaks",
     "default_icon": "icons.png",
-    "default_popup": "popup.html"
+    "default_popup": "index.html"
   },
   "permissions": [
     "activeTab",

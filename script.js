@@ -16,7 +16,6 @@
 
  const actionClickBk = (evt) => {
     evt.preventDefault();
-    removeDialogBk()
     const url = evt.target.getAttribute('url')
     window.open(url).focus();
  }
@@ -59,6 +58,7 @@ const actionClickSpan = (evt) => {
     }
 }
 
+//Обход дерева главная
 const createDivBkContener = (bkTreeNodes, divContener) => {
     for (bkTreeNodesChild of bkTreeNodes.children) {
         const index = bkTreeNodesChild.index

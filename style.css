@@ -95,7 +95,6 @@ body {
     width: 400px;
     /* height: var(--heght-bk); */
     flex-direction: row;
-    flex-wrap: nowrap;
     /* border: 1px solid brown; */
     /* background: #EEEDFA; */
     border-radius: 5px;
