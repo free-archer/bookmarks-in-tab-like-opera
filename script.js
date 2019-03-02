@@ -58,77 +58,67 @@ const actionClickSpan = (evt) => {
     }
 }
 
-//Обход дерева главная
-const createDivBkContener = (bkTreeNodes, divContener) => {
-    for (bkTreeNodesChild of bkTreeNodes.children) {
-        const index = bkTreeNodesChild.index
-        const delitel = index.toString.length*10
-        const colorInd= index < 10 ? index : index/delitel
+const renderBk = (bkTreeNodesChild, divContener) => {
+    const index = (divContener.children.length > 0) ? bkTreeNodesChild.index : 0
+    const delitel = index.toString.length*10
+    const colorInd= index < 10 ? index : index/delitel
 
+    const divBK = document.createElement('div')
+    divBK.setAttribute('url', bkTreeNodesChild.url)
+    divBK.classList.add('bk')
+    divBK.style.backgroundColor = `var(--bg-color${colorInd})`
+    divBK.textContent = getTitleShort(bkTreeNodesChild.url)
+
+    if (index > 3 ) divBK.style.display='none'
+
+    divBK.addEventListener('click', (evt) => actionClickBk(evt))
+
+    divContener.appendChild(divBK)
+}
+const renderContenerBkContener = (bkTreeNodesChild, divContener) => {
+    const contenerBkContener = document.createElement('div')
+    contenerBkContener.classList.add('contener-bk-contener')
+    divContener.appendChild(contenerBkContener)
+
+    const divBKContener = document.createElement('div')
+    divBKContener.classList.add('bk-contener')
+    contenerBkContener.appendChild(divBKContener)
+
+    if (!bkTreeNodesChild.children) {
+        renderBk(bkTreeNodesChild, divBKContener)
+    }
+
+    const span = document.createElement('div')
+    span.classList.add('title')
+    span.textContent= bkTreeNodesChild.title.substring(0, 20)
+
+    span.addEventListener('click', (evt) => actionClickSpan(evt))
+
+    contenerBkContener.appendChild(span)
+
+    return divBKContener
+}
+//Обход дерева главная
+const readNodeRecurcive= (bkTreeNodes, divContener) => {
+    for (bkTreeNodesChild of bkTreeNodes.children) {
+        
         if (bkTreeNodesChild.children) {
             //здесь рекурсивно создаются блоки куда уже будут вложены закладки
-            const contenerBkContener = document.createElement('div')
-            contenerBkContener.classList.add('contener-bk-contener')
-            divContener.appendChild(contenerBkContener)
+            divBKContener = renderContenerBkContener(bkTreeNodesChild, divContener)
 
-            const divBKContener = document.createElement('div')
-            divBKContener.classList.add('bk-contener')
-            contenerBkContener.appendChild(divBKContener)
-
-            const span = document.createElement('div')
-            span.classList.add('title')
-            span.textContent= bkTreeNodesChild.title.substring(0, 20)
-
-            span.addEventListener('click', (evt) => actionClickSpan(evt))
-
-            contenerBkContener.appendChild(span)
-            
-            createDivBkContener(bkTreeNodesChild, divBKContener)
+            //Рекурсия
+            readNodeRecurcive(bkTreeNodesChild, divBKContener)
         } else {
             if (divContener.classList[0] == 'contener') {
                 //тут мы создаем контейнер если у нас закладка без папки
-                const contenerBkContener = document.createElement('div')
-                contenerBkContener.classList.add('contener-bk-contener')
-                contenerBkContener.classList.add('tile')
-                divContener.appendChild(contenerBkContener)
+                divBKContener = renderContenerBkContener(bkTreeNodesChild, divContener)
 
-                const divBKContener = document.createElement('div')
-                divBKContener.classList.add('bk-contener')
-                contenerBkContener.appendChild(divBKContener)
-    
-                const divBK = document.createElement('div')
-                divBK.setAttribute('url', bkTreeNodesChild.url)
-                divBK.classList.add('bk')
-                divBK.style.backgroundColor = `var(--bg-color${colorInd})`
-                divBK.textContent = getTitle(bkTreeNodesChild.url)
-                divBKContener.appendChild(divBK)
-
-                divBK.addEventListener('click', (evt) => actionClickBk(evt))
-    
-                const span = document.createElement('div')
-                span.classList.add('title')
-                span.textContent= bkTreeNodesChild.title.substring(0, 20)
-
-                span.addEventListener('click', (evt) => actionClickSpan(evt))
-
-                contenerBkContener.appendChild(span)
             } else { 
                 //тут вывод самих конечных закладок
-                const divBK = document.createElement('div')
-                divBK.setAttribute('url', bkTreeNodesChild.url)
-                divBK.classList.add('bk')
-                divBK.style.backgroundColor = `var(--bg-color${colorInd})`
-                divBK.textContent = getTitleShort(bkTreeNodesChild.url)
-
-                if (index > 3 ) divBK.style.display='none'
-
-                divBK.addEventListener('click', (evt) => actionClickBk(evt))
-
-                divContener.appendChild(divBK)
+                renderBk(bkTreeNodesChild, divContener)
             }
         }
     }
-
 }
 
 const getBookmarks = () => {
@@ -139,7 +129,7 @@ const getBookmarks = () => {
 
         chrome.bookmarks.getSubTree(startNode, (startTreeNodes) => {
             const bkContener = document.getElementById('bookmarks')
-            createDivBkContener(startTreeNodes[0], bkContener)
+            readNodeRecurcive(startTreeNodes[0], bkContener)
       })
     })
 }
@@ -147,7 +137,7 @@ const getBookmarks = () => {
     // chrome.bookmarks.getTree((startTreeNodes) => {
     //     const bkContener = document.getElementById('bookmarks')
   
-    //           createDivBkContener(startTreeNodes[0], bkContener)
+    //           readNodeRecurcive(startTreeNodes[0], bkContener)
   
     //     })
     //   }
