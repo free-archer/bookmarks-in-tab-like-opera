@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Bookmaks on panel",
+  "name": "bookmarks-in-tab-like-opera",
   "description": "Bookmaks",
   "version": "0.1",
   "chrome_url_overrides": {
@@ -13,7 +13,7 @@
     "persistent": false
   },
   "browser_action": {
-    "default_title": "BookBookmaks on panelmaks",
+    "default_title": "BookBookmaks show on new tab like opera",
     "default_icon": "icons.png",
     "default_popup": "index.html"
   },
