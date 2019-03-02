@@ -60,8 +60,9 @@ const actionClickSpan = (evt) => {
 
 const renderBk = (bkTreeNodesChild, divContener) => {
     const index = (divContener.children.length > 0) ? bkTreeNodesChild.index : 0
-    const delitel = index.toString.length*10
-    const colorInd= index < 10 ? index : index/delitel
+    //const delitel = index.toString.length*10
+    //const colorInd= index < 10 ? index : index/delitel
+    const colorInd = Math.round(Math.random()*10)
 
     const divBK = document.createElement('div')
     divBK.setAttribute('url', bkTreeNodesChild.url)
