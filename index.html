@@ -1,14 +1,23 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
     <title>Bookmarks</title>
+    <link href="settings.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-    <script src="script.js"></script>
   </head>
 <body>
+  <button id="btn-settings">Настройки</button>
+  <div id="div-settings" style="display:none">
+    <input type="checkbox" name="showId" id="showId">Показать index закладок<br>
+    <input type="checkbox" name="selectID" id="selectID">Включить выбора папок<br>
+  </div>
+
     <div class="flex-contener">
         <div id="bookmarks" class="contener">
         </div>
     </div>
+
+    <script src="settings.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

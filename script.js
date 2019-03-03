@@ -1,4 +1,4 @@
- const getTitle = (url) => {
+﻿const getTitle = (url) => {
     //const text = url.match(/:\/\/.*\.\w{1,3}\//)[0].slice(3,-1)
     const start = url.search(/:\/\//)+3
     const temp = url.substring(start)
@@ -35,14 +35,11 @@ const actionClickSpan = (evt) => {
     divBKContener.classList.add('bk-dialog')
     divBKContener.style.left = evt.clientX+'px'
     divBKContener.style.top = evt.clientY+'px'
-    console.log(evt.clientX)
-    console.log(evt.clientY)
 
     document.body.appendChild(divBKContener)
 
     const bk = evt.target.parentElement.children[0].children
     for(elem of bk) {
-        console.log(elem)
         const url = elem.getAttribute('url')
         const title = elem.textContent
 
@@ -137,7 +134,8 @@ const getBookmarks = () => {
         else {
             chrome.bookmarks.getTree((startTreeNodes) => {
                 const bkContener = document.getElementById('bookmarks')
-                readNodeRecurcive(startTreeNodes[0], bkContener)
+                readNodeRecurcive(startTreeNodes[0].children[0], bkContener)
+                console.log(startTreeNodes[0])
             })
         }
       
