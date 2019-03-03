@@ -160,9 +160,11 @@ const getBookmarks = () => {
     
 }
 
+getSettingsFromStore()
 
-  
-document.addEventListener('DOMContentLoaded', () => {
-    getSettingsFromStore()
-    getBookmarks()
-  })
+// setTimeout(() => {
+//     getBookmarks()
+// }  
+//     , 1000)
+getBookmarks()  
+
