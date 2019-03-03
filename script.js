@@ -73,6 +73,29 @@ const renderBk = (bkTreeNodesChild, divContener) => {
 
     divContener.appendChild(divBK)
 }
+const renderSpan = (title, divContener) => {
+    const span = document.createElement('div')
+    span.classList.add('title')
+    span.textContent= title
+
+    span.addEventListener('click', (evt) => actionClickSpan(evt))
+
+    divContener.appendChild(span)
+}
+const renderInputCheck = (id, divContener, checked=false) => {
+    const inputCheck = document.createElement('input')
+    inputCheck.setAttribute('type', 'checkbox')
+    inputCheck.setAttribute('neme', 'inputCheck')
+    inputCheck.setAttribute('id', id)
+    inputCheck.checked = checked
+
+    divContener.appendChild(inputCheck)
+
+    inputCheck.addEventListener('click', (evt) => {
+        SETTINGS.startNodeId = +evt.target.id
+        setSettingsToStore()
+    })
+}
 const renderContenerBkContener = (bkTreeNodesChild, divContener) => {
     const contenerBkContener = document.createElement('div')
     contenerBkContener.classList.add('contener-bk-contener')
@@ -86,14 +109,14 @@ const renderContenerBkContener = (bkTreeNodesChild, divContener) => {
         renderBk(bkTreeNodesChild, divBKContener)
     }
 
-    const span = document.createElement('div')
-    span.classList.add('title')
-    span.textContent= bkTreeNodesChild.title.substring(0, 20)
+    renderSpan(bkTreeNodesChild.title, contenerBkContener)
 
-    span.addEventListener('click', (evt) => actionClickSpan(evt))
-
-    contenerBkContener.appendChild(span)
-
+    if (SETTINGS.showId) {
+        renderSpan(bkTreeNodesChild.id, contenerBkContener)
+    }
+    if (SETTINGS.selectID) {
+        renderInputCheck(bkTreeNodesChild.id, contenerBkContener)
+    }
     return divBKContener
 }
 //Обход дерева главная
@@ -120,30 +143,26 @@ const readNodeRecurcive= (bkTreeNodes, divContener) => {
 }
 
 const getBookmarks = () => {
-    //1938
-    chrome.bookmarks.search('#PLIT#', (bookmarkTreeNodes) => {
-        // console.log(bookmarkTreeNodes);
-        const startNode = bookmarkTreeNodes[0].id
-
-        if (startNode && false) {
-            chrome.bookmarks.getSubTree(startNode, (startTreeNodes) => {
-                const bkContener = document.getElementById('bookmarks')
-                readNodeRecurcive(startTreeNodes[0], bkContener)
-            })
-        } 
-        else {
-            chrome.bookmarks.getTree((startTreeNodes) => {
-                const bkContener = document.getElementById('bookmarks')
-                readNodeRecurcive(startTreeNodes[0].children[0], bkContener)
-                console.log(startTreeNodes[0])
-            })
-        }
-      
-    })
+    const startNodeId = SETTINGS.startNodeId
+    if (startNodeId != 0) {
+        chrome.bookmarks.getSubTree(startNodeId, (startTreeNodes) => {
+            const bkContener = document.getElementById('bookmarks')
+            readNodeRecurcive(startTreeNodes[0], bkContener)
+        })
+    } 
+    else {
+        chrome.bookmarks.getTree((startTreeNodes) => {
+            const bkContener = document.getElementById('bookmarks')
+            readNodeRecurcive(startTreeNodes[0].children[0], bkContener)
+            console.log(startTreeNodes[0])
+        })
+    }
+    
 }
 
 
   
 document.addEventListener('DOMContentLoaded', () => {
+    getSettingsFromStore()
     getBookmarks()
   })
