@@ -1,5 +1,7 @@
 ﻿//Global
 let divSettingsShowed = false
+let loadedSettings = false
+
 const SETTINGS = {
     showId: false,
     selectID: false,
@@ -13,7 +15,7 @@ const inpSelectID = document.getElementById('selectID')
 const inpNodeId = document.getElementById('startNodeId')
 const btnClear = document.getElementById('btn-clear')
 
-const getSettingsFromStore = () => {
+const getSettingsFromStorage = () => {
     chrome.storage.sync.get(["SETTINGS"], (result) => {
         const keys = Object.keys(result.SETTINGS)
         for (key of keys) {
@@ -21,9 +23,11 @@ const getSettingsFromStore = () => {
                 SETTINGS[key] = result.SETTINGS[key]
             }
         }
+        loadedSettings = true
+        //getBookmarks()//--сразу ошибка
     })
 }
-const setSettingsToStore = () => {
+const setSettingsToStorage = () => {
     chrome.storage.sync.set({"SETTINGS": SETTINGS});
 }
 
@@ -43,15 +47,15 @@ btnSettings.addEventListener('click', () => {
 
 inpShowId.addEventListener('click', (evt) => {
     SETTINGS.showId = evt.target.checked
-    setSettingsToStore()
+    setSettingsToStorage()
 })
 inpSelectID.addEventListener('click',(evt) => {
     SETTINGS.selectID = evt.target.checked
-    setSettingsToStore()
+    setSettingsToStorage()
 })
 
 btnClear.addEventListener('click', () => {
     SETTINGS.startNodeId= 0
     inpNodeId.value = SETTINGS.inpNodeId
-    setSettingsToStore()
+    setSettingsToStorage()
 })

@@ -93,7 +93,7 @@ const renderInputCheck = (id, divContener, checked=false) => {
 
     inputCheck.addEventListener('click', (evt) => {
         SETTINGS.startNodeId = +evt.target.id
-        setSettingsToStore()
+        setSettingsToStorage()
     })
 }
 const renderContenerBkContener = (bkTreeNodesChild, divContener) => {
@@ -154,17 +154,23 @@ const getBookmarks = () => {
         chrome.bookmarks.getTree((startTreeNodes) => {
             const bkContener = document.getElementById('bookmarks')
             readNodeRecurcive(startTreeNodes[0].children[0], bkContener)
-            console.log(startTreeNodes[0])
+            //console.log(startTreeNodes[0])
         })
     }
     
 }
 
-getSettingsFromStore()
+getSettingsFromStorage()
+getBookmarks()
 
 // setTimeout(() => {
 //     getBookmarks()
 // }  
 //     , 1000)
-getBookmarks()  
+// while (true) {
+//     if (loadedSettings) {
+//     getBookmarks()
+//     break
+//     }
+// }  
 
