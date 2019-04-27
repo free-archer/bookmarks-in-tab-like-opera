@@ -1,5 +1,18 @@
 # bookmarks-in-tab-like-opera
 
+#### this extension is only partially functional
+#### the fully working extension is written in react.js and located in my repository
+#### https://github.com/Bespalov-AV/bookmarks-on-tab-like-opera-react-ext
+
+#
+
+#### данное расширение работоспособно только частично
+#### полностью рабочее расширение написано на react.js и распаложено в моем репозитории
+#### https://github.com/Bespalov-AV/bookmarks-on-tab-like-opera-react-ext
+
+
+# Описание
+
 В браузере Opera здорово реализовали панель закладок. Только из-за неё я перешел в Opera.
 Тем не менее Chrome отличный браузер к нему много полезных расширений нужных для программиста.  Вот я и решил сделать расширение для chrome, которое бы выводило закладки, как в opera.
 Вот что из этого получилось.
